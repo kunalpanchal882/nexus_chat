@@ -1,5 +1,5 @@
 import React from "react";
-import { User, Mail, Lock, MessageSquare ,UserLock} from "lucide-react";
+import { User, Mail, Lock, MessageSquare, UserLock } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import {
@@ -17,15 +17,15 @@ const SignupPage = () => {
   return (
     <div className="bg-[#1A1D2E] w-full h-full relative overflow-hidden">
       <Authbackground className="" />
-      <div className="pl-20 absolute top-10 flex flex-col gap-2  justify-center z-[9999] ">
+      <div className="pl-15 absolute top-18 lg:top-15 flex flex-col gap-1   justify-center z-[9999] ">
         <span className="bg-[#5d68f3] p-2 rounded-xl size-12 flex items-center justify-center mb-1">
           <MessageSquare className="text-white " />
         </span>
         <h1 className="text-white text-2xl">NEXUS CHAT</h1>
       </div>
 
-      <div className="flex p-20 h-screen absolute w-full gap-10 z-[9999] justify-between mt-1 items-center">
-        <Card className="w-[40%] border-none bg-[#272b3d] text-white">
+      <div className="flex p-13  absolute mt-10 lg:items-center w-full gap-10 z-[9999] items-center justify-between mt-1 items-center">
+        <Card className="w-full md:w-[70%] lg:w-[45%] border-none bg-[#272b3d] text-white">
           <CardHeader>
             <CardTitle className="text-2xl">Create Account</CardTitle>
             <CardDescription>
@@ -112,34 +112,31 @@ const SignupPage = () => {
             </div>
           </CardFooter>
         </Card>
-        <div className="w-[50%] flex flex-col gap-3 p-10 rounded-xl bg-[#272b3d]">
-          <div className="flex w-full items-center gap-3">
-            <Skeleton className="h-12 w-12 rounded-full bg-[#5d68f3]" />
-            <div className="w-full flex flex-col gap-2">
-              <Skeleton className="h-4 w-full rounded-full bg-[#5d67f358]" />
-              <Skeleton className="h-4 w-1/2 rounded-full bg-[#5d67f358]" />
-            </div>
+        <div className="w-[47%] hidden md:flex flex-col gap-3 p-10 rounded-xl bg-[#272b3d]">
+          <div className="flex w-full items-center justify-center gap-8">
+            <Skeleton className="h-26 w-26 rounded-xl bg-[#5d67f358]" />
+            <Skeleton className="h-26 w-26 rounded-xl bg-[#5d67f358]" />
+            <Skeleton className="h-26 w-26 rounded-xl bg-[#5d67f358]" />
           </div>
-          <div className="flex w-full items-center gap-3">
-            <Skeleton className="h-12 w-12 rounded-full bg-[#5d68f3]" />
-            <div className="w-full flex flex-col gap-2">
-              <Skeleton className="h-4 w-full rounded-full bg-[#5d67f358]" />
-              <Skeleton className="h-4 w-1/2 rounded-full bg-[#5d67f358]" />
-            </div>
+          <div className="flex w-full items-center justify-center gap-8">
+            <Skeleton className="h-26 w-26 rounded-xl bg-[#5d67f358]" />
+            <Skeleton className="h-26 w-26 rounded-xl bg-[#5d67f358]" />
+            <Skeleton className="h-26 w-26 rounded-xl bg-[#5d67f358]" />
           </div>
-          <div className="flex w-full items-center gap-3">
-            <Skeleton className="h-12 w-12 rounded-full bg-[#5d68f3]" />
-            <div className="w-full flex flex-col gap-2">
-              <Skeleton className="h-4 w-full rounded-full bg-[#5d67f358]" />
-              <Skeleton className="h-4 w-1/2 rounded-full bg-[#5d67f358]" />
-            </div>
+          <div className="flex w-full items-center justify-center gap-8">
+            <Skeleton className="h-26 w-26 rounded-xl bg-[#5d67f358]" />
+            <Skeleton className="h-26 w-26 rounded-xl bg-[#5d67f358]" />
+            <Skeleton className="h-26 w-26 rounded-xl bg-[#5d67f358]" />
           </div>
+
           <div className="flex flex-col items-center gap-1 mt-3">
             <div className="bg-[#242631] border border-blue-900 p-4 rounded-2xl animate-pulse">
-                <UserLock className="text-[#5d68f3] size-9"/>
+              <UserLock className="text-[#5d68f3] size-9" />
             </div>
             <p>Join our community</p>
-            <span className="text-gray-400">Connect with friends, share moments and stay in touch</span>
+            <span className="text-gray-400">
+              Connect with friends, share moments and stay in touch
+            </span>
           </div>
         </div>
       </div>
