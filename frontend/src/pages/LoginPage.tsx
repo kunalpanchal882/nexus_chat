@@ -12,20 +12,45 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import Authbackground from "@/components/ui/Authbackground.jsx";
+import { useNavigate } from "react-router-dom";
+import {easeInOut, motion} from 'framer-motion'
 
 const LoginPage = () => {
+  const navigate = useNavigate()
+
+   const handelNavigate = () => {
+    navigate('/signup')
+  }
+
   return (
     <div className="bg-[#1A1D2E] w-full min-h-screen p-[5rem]">
       <Authbackground />
       <div className="flex flex-col items-center  w-full">
-        <div className="absolute top-40 lg:top-[15%] md:top-40 flex items-center flex-col gap-2 justify-center z-[9999] ">
+
+        {/* CHAT LOGO */}
+        <motion.div className="absolute top-40 lg:top-[15%] md:top-40 flex items-center flex-col gap-2 justify-center z-[9999] "
+        initial={{opacity:0,x:-20}}
+        animate={{opacity:1,x:0}}
+        transition={{
+          duration:0.8,
+          ease:"easeInOut"
+        }}
+        >
           <span className="bg-[#5d68f3] p-2 rounded-xl size-12 flex items-center justify-center mb-1">
             <MessageSquare className="text-white " />
           </span>
           <h1 className="text-white text-2xl">NEXUS CHAT</h1>
-        </div>
+        </motion.div>
 
-        <div className="flex absolute w-full md:w-[70%] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-[9999] justify-evenly mt-10 items-center">
+        {/* LOGIN FORM DIV */}
+        <motion.div className="flex absolute w-full md:w-[70%] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-[9999] justify-evenly mt-10 items-center"
+        initial={{opacity:0,y:40}}
+        animate={{opacity:1,y:0}}
+        transition={{
+          duration:0.8,
+          ease:"easeInOut"
+        }}
+        >
           <Card className="w-full max-w-sm border-none bg-[#272b3d] text-white">
             <CardHeader>
               <CardTitle className="text-2xl">Login to your account</CardTitle>
@@ -79,13 +104,16 @@ const LoginPage = () => {
                 <Button
                   className="items-end cursor-pointer text-[#5d68f3] hover:shadow-[#5d68f3]"
                   variant="link"
+                  onClick={handelNavigate}
                 >
                   Sign Up
                 </Button>
               </div>
             </CardFooter>
           </Card>
-        </div>
+          
+        </motion.div>
+
       </div>
     </div>
   );

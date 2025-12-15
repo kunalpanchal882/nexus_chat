@@ -12,20 +12,50 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import Authbackground from "@/components/ui/Authbackground.jsx";
+import { useNavigate } from "react-router-dom";
+import {motion} from 'framer-motion'
 
 const SignupPage = () => {
+  const navigate  = useNavigate()
+
+
+  const handelNavigate = () => {
+    navigate('/login')
+  }
+
+
+
   return (
     <div className="bg-[#1A1D2E] w-full h-full relative overflow-hidden">
       <Authbackground className="" />
-      <div className="pl-15 absolute top-18 lg:top-15 flex flex-col gap-1   justify-center z-[9999] ">
+      
+      {/* CHAT LOGO */}
+      <motion.div className="pl-15 absolute top-18 lg:top-15 flex flex-col gap-1   justify-center z-[9999] "
+      initial={{opacity:0,y:40}}
+        animate={{opacity:1,y:0}}
+        transition={{
+          duration:0.8,
+          ease:"easeInOut"
+        }}
+      >
         <span className="bg-[#5d68f3] p-2 rounded-xl size-12 flex items-center justify-center mb-1">
           <MessageSquare className="text-white " />
         </span>
         <h1 className="text-white text-2xl">NEXUS CHAT</h1>
-      </div>
+      </motion.div>
 
       <div className="flex p-13  absolute mt-10 lg:items-center w-full gap-10 z-[9999] items-center justify-between mt-1 items-center">
-        <Card className="w-full md:w-[70%] lg:w-[45%] border-none bg-[#272b3d] text-white">
+        
+        {/* CREATE ACCOUNT FORM DIV */}
+        <motion.div className="w-full md:w-[70%] lg:w-[45%]"
+        initial={{opacity:0,y:40}}
+        animate={{opacity:1,y:0}}
+        transition={{
+          duration:0.8,
+          ease:"easeInOut"
+        }}
+        >
+          <Card className="w-full md:w-[100%] lg:w-[100%] border-none bg-[#272b3d] text-white">
           <CardHeader>
             <CardTitle className="text-2xl">Create Account</CardTitle>
             <CardDescription>
@@ -106,13 +136,24 @@ const SignupPage = () => {
               <Button
                 className="items-end cursor-pointer text-[#5d68f3] hover:shadow-[#5d68f3]"
                 variant="link"
+                onClick={handelNavigate}
               >
                 Sign Up
               </Button>
             </div>
           </CardFooter>
         </Card>
-        <div className="w-[47%] hidden md:flex flex-col gap-3 p-10 rounded-xl bg-[#272b3d]">
+        </motion.div>
+        
+        {/* SIDE ANIMATION SKALITION */}
+        <motion.div className="w-[47%] hidden md:flex flex-col gap-3 p-10 rounded-xl bg-[#272b3d]"
+        initial={{opacity:0,x:40}}
+        animate={{opacity:1,x:0}}
+        transition={{
+          duration:0.8,
+          ease:"easeInOut"
+        }}
+        >
           <div className="flex w-full items-center justify-center gap-8">
             <Skeleton className="h-26 w-26 rounded-xl bg-[#5d67f358]" />
             <Skeleton className="h-26 w-26 rounded-xl bg-[#5d67f358]" />
@@ -138,7 +179,7 @@ const SignupPage = () => {
               Connect with friends, share moments and stay in touch
             </span>
           </div>
-        </div>
+        </motion.div>
       </div>
     </div>
   );
