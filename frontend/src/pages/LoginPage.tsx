@@ -13,7 +13,7 @@ import {
 } from "@/components/ui/card";
 import Authbackground from "@/components/ui/Authbackground.jsx";
 import { useNavigate } from "react-router-dom";
-import {easeInOut, motion} from 'framer-motion'
+import { motion} from 'framer-motion'
 
 const LoginPage = () => {
   const navigate = useNavigate()
@@ -111,7 +111,7 @@ const LoginPage = () => {
               </div>
             </CardFooter>
           </Card>
-          
+
         </motion.div>
 
       </div>
