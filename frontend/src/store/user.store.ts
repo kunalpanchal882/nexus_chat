@@ -10,6 +10,16 @@ interface User {
   avatarUrl?: string
 }
 
+interface SignupResponse {
+  success:boolean,
+  data?:User
+}
+
+interface loginResponse{
+  success:boolean,
+  data?:User
+}
+
 interface AuthState {
   authUser: User | null
   isSigningUp: boolean
@@ -21,8 +31,8 @@ interface AuthState {
 
   // actions
   checkAuth: () => Promise<void>
-  signup: (data: Record<string, unknown>) => Promise<unknown>
-  login: (data: Record<string, unknown>) => Promise<unknown>
+  signup: (data: Record<string, unknown>) => Promise<SignupResponse>
+  login: (data: Record<string, unknown>) => Promise<loginResponse>
   logout: () => Promise<void>
   updateProfile: (file: File) => Promise<void>
 
@@ -40,7 +50,7 @@ export const userAuthStore = create<AuthState>((set, get) => ({
   onlineUsers: [],
   socket: null,
 
-  signup: async (data: Record<string, unknown>) => {
+  signup: async (data: Record<string, unknown>) => {    
     set({ isSigningUp: true })
     try {
       const res = await axiosinstance.post('/auth/register', data)
@@ -48,7 +58,7 @@ export const userAuthStore = create<AuthState>((set, get) => ({
       if (userData) {
         set({ authUser: { _id: userData.id, name: userData.name, email: userData.email } })
         toast.success('Account created successfully')
-        get().connectSocket()
+        // get().connectSocket()
         return { success: true, data: userData }
       }
       return { success: false }
@@ -68,7 +78,7 @@ export const userAuthStore = create<AuthState>((set, get) => ({
       if (userData) {
         set({ authUser: { _id: userData.id, name: userData.name, email: userData.email } })
         toast.success('Logged in successfully')
-        get().connectSocket()
+        // get().connectSocket()
         return { success: true, data: userData }
       }
       return { success: false }

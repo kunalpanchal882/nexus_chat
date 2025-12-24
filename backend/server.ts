@@ -5,10 +5,7 @@ import cors from 'cors'
 import {createServer} from 'http'
 import initSocketServer from './src/socket/chat.socket'
 
-app.use(cors({
-    origin:"http://localhost:5173",
-    credentials:true
-}))
+
 
 const httpServer = createServer(app)
 initSocketServer(httpServer)

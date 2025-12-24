@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { MessageSquare, Mail, Lock } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -14,12 +14,50 @@ import {
 import Authbackground from "@/components/ui/Authbackground.jsx";
 import { useNavigate } from "react-router-dom";
 import { motion} from 'framer-motion'
+import {userAuthStore} from '@/store/user.store'
+import { fromTheme } from "tailwind-merge";
 
 const LoginPage = () => {
   const navigate = useNavigate()
 
+  interface loginForm {
+    email:string,
+    password:string
+  }
+
+  const [formData, setformData] = useState<loginForm>({
+    email:"",
+    password:"",
+  })
+  const {login,isLoggingIn} = userAuthStore()
+  
+
    const handelNavigate = () => {
     navigate('/signup')
+  }
+
+  const handelChange = (e:React.ChangeEvent<HTMLInputElement>) => {
+    const {name,value} = e.target
+
+    setformData(prev => ({
+      ...prev,
+      [name]:value
+    }))
+
+  }
+  
+  const handelSubmit = async(e:React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+
+   const result = await login({
+    email:formData.email,
+    password:formData.password
+   })
+
+   if(result.success){
+    navigate('/')
+   }
+
   }
 
   return (
@@ -59,7 +97,7 @@ const LoginPage = () => {
               </CardDescription>
             </CardHeader>
             <CardContent>
-              <form>
+              <form onSubmit={handelSubmit}>
                 <div className="flex flex-col gap-6">
                   <div className="grid gap-2">
                     <label htmlFor="email" className="text-gray-400">
@@ -70,6 +108,8 @@ const LoginPage = () => {
                       <input
                         id="email"
                         type="email"
+                        name="email"
+                        onChange={handelChange}
                         placeholder="example@gmail.com"
                         required
                         className="w-full pl-13 p-3 rounded-xl bg-[#1e2139] focus:border-blue-900 focus:ring-blue-900 focus:ring-2 focus:outline-none"
@@ -83,6 +123,8 @@ const LoginPage = () => {
                       <input
                         id="password"
                         type="password"
+                        name="password"
+                        onChange={handelChange}
                         placeholder="*********"
                         required
                         className=" w-full p-3 pl-13 rounded-xl bg-[#1e2139] focus:border-blue-900 focus:ring-blue-900 focus:ring-2 focus:outline-none"
@@ -90,15 +132,16 @@ const LoginPage = () => {
                     </div>
                   </div>
                 </div>
-              </form>
-            </CardContent>
-            <CardFooter className="flex-col gap-2">
-              <Button
+                <Button
                 type="submit"
-                className="w-full py-5 bg-[#5d68f3] shadow-lg hover:shadow-[0_0_20px_5px_rgba(93,104,243,0.7)] hover:bg-[#7c80f7] transition-all duration-300"
+                className="w-full mt-5 py-5 bg-[#5d68f3] shadow-lg hover:shadow-[0_0_20px_5px_rgba(93,104,243,0.7)] hover:bg-[#7c80f7] transition-all duration-300"
               >
                 Login
               </Button>
+              </form>
+            </CardContent>
+            <CardFooter className="flex-col gap-2">
+              
               <div>
                 <span>Dont't have an account</span>
                 <Button

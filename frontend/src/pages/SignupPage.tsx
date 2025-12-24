@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { User, Mail, Lock, MessageSquare, UserLock } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -13,16 +13,64 @@ import {
 } from "@/components/ui/card";
 import Authbackground from "@/components/ui/Authbackground.jsx";
 import { useNavigate } from "react-router-dom";
-import {motion} from 'framer-motion'
+import {motion, type SingleTransformer} from 'framer-motion'
+import {userAuthStore} from '@/store/user.store'
+import { toast } from "react-toastify";
 
 const SignupPage = () => {
   const navigate  = useNavigate()
 
+  interface signupfromData {
+    name: string
+    email: string
+    password: string
+    confirmPassword:string
+  }
+
+  const [formData, setformData] = useState<signupfromData>({
+    name:"",
+    email:"",
+    password:"",
+    confirmPassword:""
+  })
+
+
+  const {signup,isSigningUp} = userAuthStore()
+
+
+  const handelChange = (e:React.ChangeEvent<HTMLInputElement>) => {
+    const {name,value} = e.target
+
+    setformData(prev => ({
+      ...prev,
+      [name]:value
+    }))
+    
+  }
 
   const handelNavigate = () => {
     navigate('/login')
   }
 
+  const handelSubmit = async(e:React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+
+    if(formData.password !== formData.confirmPassword){
+      toast.error("Passowrd and confrim passowrd must be same")
+      return
+    }
+
+    const result = await signup({
+      name:formData.name,
+      email:formData.email,
+      password:formData.password,
+    })
+
+    if(result.success){
+      navigate('/login')
+    }
+
+  }
 
 
   return (
@@ -63,7 +111,7 @@ const SignupPage = () => {
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <form>
+            <form onSubmit={handelSubmit}>
               <div className="flex flex-col gap-3">
                 <div className="grid gap-2">
                   <label htmlFor="email" className="text-gray-400">
@@ -73,9 +121,11 @@ const SignupPage = () => {
                     <User className="absolute left-3 top-1/4 z-[9999] text-gray-400" />
                     <input
                       id="fullname"
-                      type="fullname"
+                      type="text"
+                      name="name"
                       placeholder="john Doe"
                       required
+                      onChange={handelChange}
                       className="w-full pl-13 p-3 rounded-xl bg-[#1e2139] focus:border-blue-900 focus:ring-blue-900 focus:ring-2 focus:outline-none"
                     />
                   </div>
@@ -89,8 +139,10 @@ const SignupPage = () => {
                     <input
                       id="email"
                       type="email"
+                      name="email"
                       placeholder="example@gmail.com"
                       required
+                      onChange={handelChange}
                       className="w-full pl-13 p-3 rounded-xl bg-[#1e2139] focus:border-blue-900 focus:ring-blue-900 focus:ring-2 focus:outline-none"
                     />
                   </div>
@@ -100,10 +152,12 @@ const SignupPage = () => {
                   <div className="w-full relative">
                     <Lock className="absolute left-3 top-1/4 z-[9999] text-gray-400" />
                     <input
-                      id="password"
+                      // id="password"
                       type="password"
                       placeholder="*********"
+                      name="password"
                       required
+                      onChange={handelChange}
                       className=" w-full p-3 pl-13 rounded-xl bg-[#1e2139] focus:border-blue-900 focus:ring-blue-900 focus:ring-2 focus:outline-none"
                     />
                   </div>
@@ -115,22 +169,25 @@ const SignupPage = () => {
                     <input
                       id="password"
                       type="password"
+                      name="confirmPassword"
                       placeholder="*********"
                       required
+                      onChange={handelChange}
                       className=" w-full p-3 pl-13 rounded-xl bg-[#1e2139] focus:border-blue-900 focus:ring-blue-900 focus:ring-2 focus:outline-none"
                     />
                   </div>
                 </div>
               </div>
+              <Button
+              type="submit"
+              className="w-full mt-3 py-5 bg-[#5d68f3] shadow-lg hover:shadow-[0_0_20px_5px_rgba(93,104,243,0.7)] hover:bg-[#7c80f7] transition-all duration-300"
+            >
+              sign up
+            </Button>
             </form>
           </CardContent>
           <CardFooter className="flex-col gap-2">
-            <Button
-              type="submit"
-              className="w-full py-5 bg-[#5d68f3] shadow-lg hover:shadow-[0_0_20px_5px_rgba(93,104,243,0.7)] hover:bg-[#7c80f7] transition-all duration-300"
-            >
-              Login
-            </Button>
+            
             <div>
               <span>Dont't have an account</span>
               <Button
@@ -138,7 +195,7 @@ const SignupPage = () => {
                 variant="link"
                 onClick={handelNavigate}
               >
-                Sign Up
+                Login
               </Button>
             </div>
           </CardFooter>
